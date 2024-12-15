@@ -5,6 +5,9 @@ import com.frankefelipee.myissuertracker.auth.AuthRequest;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,11 +36,10 @@ public class User {
     @Column(name = "user_id")
     private UUID id;
 
-    @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String name;
 
-    @NotBlank(message = "Password is required")
+    @Column
     private String password;
 
 }
