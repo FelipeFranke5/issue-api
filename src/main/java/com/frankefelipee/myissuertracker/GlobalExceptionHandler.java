@@ -16,7 +16,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> handleResourceNotFoundException(NoHandlerFoundException e) {
 
-        return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "No Resource Found",
+                        "We do not have a resource for this given route",
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.NOT_FOUND
+        );
 
     }
 
