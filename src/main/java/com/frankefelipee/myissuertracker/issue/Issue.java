@@ -29,12 +29,12 @@ public class Issue {
     private String salesForce;
 
     @NotNull(message = "The ticket cannot be null")
-    @NotEmpty
+    @NotEmpty(message = "The ticket cannot be empty")
     @Size(message = "The ticket should be between 4-15 characters", min = 4, max = 15)
     private String ticket;
 
     @NotNull(message = "The description cannot be null")
-    @NotEmpty
+    @NotEmpty(message = "The description cannot be empty")
     @Size(message = "The description should be between 10-100 characters", min = 10, max = 100)
     private String description;
 
