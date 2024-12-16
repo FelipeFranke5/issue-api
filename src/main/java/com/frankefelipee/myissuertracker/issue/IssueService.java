@@ -7,57 +7,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @Service
 @AllArgsConstructor
 public class IssueService {
 
     private final IssueRepository issueRepository;
+    private final IssueLinkBuilder linkBuilder;
 
     public CollectionModel<EntityModel<Issue>> getAllIssues() {
 
-        List<EntityModel<Issue>> issues = issueRepository.findAll().stream()
-                .map(issue -> EntityModel.of(
-                        issue,
-                        linkTo(methodOn(IssueController.class).oneIssue(issue.getId())).withSelfRel(),
-                        linkTo(methodOn(IssueController.class).changeIssue(issue, issue.getId())).withRel("modify"),
-                        linkTo(methodOn(IssueController.class).deleteIssue(issue.getId())).withRel("delete"),
-                        linkTo(methodOn(IssueController.class).finishIssue(issue.getId())).withRel("complete"),
-                        linkTo(methodOn(IssueController.class).allIssues()).withRel("issues")))
-                .toList();
-
-        return CollectionModel.of(issues, linkTo(methodOn(IssueController.class).allIssues()).withSelfRel());
+        List<Issue> issueList = issueRepository.findAll();
+        return linkBuilder.getIssuesListWithLinks(issueList);
 
     }
 
     public EntityModel<Issue> getOneIssue(String id) {
 
-        Issue issue = issueRepository.findById(id)
-                .orElseThrow(() -> new IssueNotFoundException(id));
-
-        return EntityModel.of(
-                issue,
-                linkTo(methodOn(IssueController.class).oneIssue(id)).withSelfRel(),
-                linkTo(methodOn(IssueController.class).changeIssue(issue, id)).withRel("modify"),
-                linkTo(methodOn(IssueController.class).deleteIssue(id)).withRel("delete"),
-                linkTo(methodOn(IssueController.class).finishIssue(id)).withRel("complete"),
-                linkTo(methodOn(IssueController.class).allIssues()).withRel("issues"));
+        Issue issue = issueRepository.findById(id).orElseThrow(() -> new IssueNotFoundException(id));
+        return linkBuilder.getIssueWithLinks(id, issue);
 
     }
 
     public EntityModel<Issue> generateNewIssue(Issue issue) {
 
         Issue issueCreated = issueRepository.save(issue);
-
-        return EntityModel.of(
-                issueCreated,
-                linkTo(methodOn(IssueController.class).oneIssue(issueCreated.getId())).withSelfRel(),
-                linkTo(methodOn(IssueController.class).changeIssue(issueCreated, issueCreated.getId())).withRel("modify"),
-                linkTo(methodOn(IssueController.class).deleteIssue(issueCreated.getId())).withRel("delete"),
-                linkTo(methodOn(IssueController.class).finishIssue(issueCreated.getId())).withRel("complete"),
-                linkTo(methodOn(IssueController.class).allIssues()).withRel("issues"));
+        return linkBuilder.getCreatedIssueWithLinks(issueCreated);
 
     }
 
@@ -83,48 +57,23 @@ public class IssueService {
 
         }
 
-        return EntityModel.of(
-                issueModified,
-                linkTo(methodOn(IssueController.class).oneIssue(issueModified.getId())).withSelfRel(),
-                linkTo(methodOn(IssueController.class).changeIssue(issueModified, issueModified.getId())).withRel("modify"),
-                linkTo(methodOn(IssueController.class).deleteIssue(issueModified.getId())).withRel("delete"),
-                linkTo(methodOn(IssueController.class).finishIssue(issueModified.getId())).withRel("complete"),
-                linkTo(methodOn(IssueController.class).allIssues()).withRel("issues"));
+        return linkBuilder.getModifiedIssueWithLinks(issueModified);
 
     }
 
-    public Issue getIssueMarkedAsDone(String id) {
+    public EntityModel<Issue> markIssueAsDone(String id) {
 
         Issue issueFound = issueRepository.findById(id).orElseThrow(() -> new IssueNotFoundException(id));
 
         if (!issueFound.isDone()) {
 
             issueFound.setDone(true);
-            issueRepository.save(issueFound);
-            return issueFound;
+            Issue modifiedIssue = issueRepository.save(issueFound);
+            return linkBuilder.getIssueWithLinks(id, modifiedIssue);
 
         }
 
-        return null;
-
-    }
-
-    public EntityModel<Issue> markIssueAsDone(String id) {
-
-        Issue finishedIssue = this.getIssueMarkedAsDone(id);
-
-        if (finishedIssue != null) {
-
-            return EntityModel.of(
-                    finishedIssue,
-                    linkTo(methodOn(IssueController.class).oneIssue(finishedIssue.getId())).withSelfRel(),
-                    linkTo(methodOn(IssueController.class).changeIssue(finishedIssue, finishedIssue.getId())).withRel("modify"),
-                    linkTo(methodOn(IssueController.class).deleteIssue(finishedIssue.getId())).withRel("delete"),
-                    linkTo(methodOn(IssueController.class).allIssues()).withRel("issues"));
-
-        }
-
-        return null;
+        throw new IssueAlreadyDoneException();
 
     }
 

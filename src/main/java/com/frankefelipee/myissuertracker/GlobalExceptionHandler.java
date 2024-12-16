@@ -1,5 +1,8 @@
 package com.frankefelipee.myissuertracker;
 
+import com.frankefelipee.myissuertracker.issue.IssueAlreadyDoneException;
+import com.frankefelipee.myissuertracker.issue.IssueContainsSameDataException;
+import com.frankefelipee.myissuertracker.issue.IssueNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.ResponseEntity;
@@ -78,10 +81,52 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new GlobalErrorResponse(
                         "Database Level Validation Error",
-                        "Could not proceed with persistance at DataBase level.",
+                        e.getMessage(),
                         ZonedDateTime.now()
                 ),
                 HttpStatus.INTERNAL_SERVER_ERROR
+        );
+
+    }
+
+    @ExceptionHandler(IssueAlreadyDoneException.class)
+    public ResponseEntity<?> handleIssueAlreadyDoneException(IssueAlreadyDoneException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "Issue Already Done",
+                        e.getMessage(),
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+
+    }
+
+    @ExceptionHandler(IssueContainsSameDataException.class)
+    public ResponseEntity<?> handleIssueContainsSameDataException(IssueContainsSameDataException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "Modifying With Same Data",
+                        e.getMessage(),
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+
+    }
+
+    @ExceptionHandler(IssueNotFoundException.class)
+    public ResponseEntity<?> handleIssueNotFoundException(IssueNotFoundException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "Issue Not Found",
+                        e.getMessage(),
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.NOT_FOUND
         );
 
     }

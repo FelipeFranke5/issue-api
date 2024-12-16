@@ -9,7 +9,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @RestController
@@ -20,18 +19,10 @@ public class IssueController {
     private final IssueService issueService;
 
     @GetMapping("/all")
-    public ResponseEntity<IssueResponse> allIssues() {
+    public ResponseEntity<CollectionModel<EntityModel<Issue>>> allIssues() {
 
         CollectionModel<EntityModel<Issue>> allIssues = issueService.getAllIssues();
-        IssueResponse issueResponse = new IssueResponse(
-                false,
-                "successfull",
-                "Query Successfull",
-                null,
-                allIssues
-        );
-
-        return ResponseEntity.ok(issueResponse);
+        return ResponseEntity.ok(allIssues);
 
     }
 
@@ -58,13 +49,7 @@ public class IssueController {
     @PatchMapping("/mark_done/{id}")
     ResponseEntity<EntityModel<Issue>> finishIssue(@PathVariable String id) {
 
-        EntityModel<Issue> issue = issueService.markIssueAsDone(id);
-
-        if (issue != null) {
-            return ResponseEntity.ok(issue);
-        }
-
-        throw new IssueAlreadyDoneException();
+        return ResponseEntity.ok(issueService.markIssueAsDone(id));
 
     }
 
@@ -83,16 +68,8 @@ public class IssueController {
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteIssue(@PathVariable String id) {
 
-        try {
-
-            issueService.deleteIssueById(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (IssueNotFoundException issueNotFoundException) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-        }
+        issueService.deleteIssueById(id);
+        return ResponseEntity.noContent().build();
 
     }
 
