@@ -2,12 +2,14 @@ package com.frankefelipee.myissuertracker.issue;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Component
 public class IssueLinkBuilder {
 
     public CollectionModel<EntityModel<Issue>> getIssuesListWithLinks(List<Issue> issueList) {
