@@ -71,7 +71,12 @@ public class IssueController {
     @PutMapping("/modify/{id}")
     ResponseEntity<IssueResponse> changeIssue(@Valid @RequestBody IssueRequest issueRequest, @PathVariable String id) {
 
-
+        Issue issue = new Issue();
+        issue.setSalesForce(issueRequest.salesForce());
+        issue.setDescription(issueRequest.description());
+        issue.setTicket(issueRequest.ticket());
+        EntityModel<Issue> changedIssue = issueService.modifyIssue(issue, id);
+        return ResponseEntity.ok(changedIssue);
 
     }
 
