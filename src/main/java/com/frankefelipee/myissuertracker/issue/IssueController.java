@@ -56,41 +56,15 @@ public class IssueController {
     }
 
     @PatchMapping("/mark_done/{id}")
-    ResponseEntity<IssueResponse> finishIssue(@PathVariable String id) {
+    ResponseEntity<EntityModel<Issue>> finishIssue(@PathVariable String id) {
 
-        try {
+        EntityModel<Issue> issue = issueService.markIssueAsDone(id);
 
-            EntityModel<Issue> issue = issueService.markIssueAsDone(id);
-
-            if (issue != null) {
-
-                IssueResponse issueResponse = new IssueResponse(
-                        false,
-                        "Successful",
-                        "Marked as Done",
-                        issue,
-                        null
-                );
-
-                return ResponseEntity.ok(issueResponse);
-
-            }
-
-            IssueResponse issueResponse = new IssueResponse(
-                    false,
-                    "Failed",
-                    "The Issue you are trying to mark as done is already done.",
-                    null,
-                    null
-            );
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(issueResponse);
-
-        } catch (IssueNotFoundException issueNotFoundException) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
+        if (issue != null) {
+            return ResponseEntity.ok(issue);
         }
+
+        throw new IssueAlreadyDoneException();
 
     }
 
