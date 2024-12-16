@@ -73,6 +73,16 @@ public class IssueService {
                 })
                 .orElseGet(() -> issueRepository.save(issue));
 
+        if (
+                issue.getDescription().equals(issueModified.getDescription()) &&
+                issue.getTicket().equals(issueModified.getTicket()) &&
+                issue.getSalesForce().equals(issueModified.getSalesForce())
+        ) {
+
+            throw new IssueContainsSameDataException();
+
+        }
+
         return EntityModel.of(
                 issueModified,
                 linkTo(methodOn(IssueController.class).oneIssue(issueModified.getId())).withSelfRel(),
