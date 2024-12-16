@@ -36,26 +36,10 @@ public class IssueController {
     }
 
     @GetMapping("/search/{id}")
-    public ResponseEntity<IssueResponse> oneIssue(@PathVariable String id) {
+    public ResponseEntity<EntityModel<Issue>> oneIssue(@PathVariable String id) {
 
-        try {
-
-            EntityModel<Issue> issue = issueService.getOneIssue(id);
-            IssueResponse issueResponse = new IssueResponse(
-                    false,
-                    "successful",
-                    "Query Successfull",
-                    issue,
-                    null
-            );
-
-            return ResponseEntity.ok(issueResponse);
-
-        } catch (IssueNotFoundException issueNotFoundException) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-        }
+        EntityModel<Issue> issue = issueService.getOneIssue(id);
+        return ResponseEntity.ok(issue);
 
     }
 
