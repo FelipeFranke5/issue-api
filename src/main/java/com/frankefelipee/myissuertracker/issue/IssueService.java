@@ -1,5 +1,6 @@
 package com.frankefelipee.myissuertracker.issue;
 
+import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -10,15 +11,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
+@AllArgsConstructor
 public class IssueService {
 
     private final IssueRepository issueRepository;
-
-    public IssueService(IssueRepository issueRepository) {
-
-        this.issueRepository = issueRepository;
-
-    }
 
     public long getIssuesCount() {
 
