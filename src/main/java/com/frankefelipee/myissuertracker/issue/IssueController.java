@@ -44,20 +44,14 @@ public class IssueController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<IssueResponse> createIssue(@Valid @RequestBody IssueRequest issueRequest) {
+    ResponseEntity<EntityModel<Issue>> createIssue(@Valid @RequestBody IssueRequest issueRequest) {
 
         Issue issue = new Issue();
         issue.setSalesForce(issueRequest.salesForce());
         issue.setDescription(issueRequest.description());
         issue.setTicket(issueRequest.ticket());
-        IssueResponse issueResponse = new IssueResponse(
-                true,
-                "sucessful",
-                "created",
-                issueService.generateNewIssue(issue),
-                null);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(issueResponse);
+        EntityModel<Issue> issueEntityModel = issueService.generateNewIssue(issue);
+        return ResponseEntity.status(HttpStatus.CREATED).body(issueEntityModel);
 
     }
 
