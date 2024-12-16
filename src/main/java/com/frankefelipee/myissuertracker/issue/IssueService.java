@@ -16,12 +16,6 @@ public class IssueService {
 
     private final IssueRepository issueRepository;
 
-    public long getIssuesCount() {
-
-        return issueRepository.count();
-
-    }
-
     public CollectionModel<EntityModel<Issue>> getAllIssues() {
 
         List<EntityModel<Issue>> issues = issueRepository.findAll().stream()
