@@ -69,26 +69,9 @@ public class IssueController {
     }
 
     @PutMapping("/modify/{id}")
-    ResponseEntity<IssueResponse> changeIssue(@Valid @RequestBody Issue issue, @PathVariable String id) {
+    ResponseEntity<IssueResponse> changeIssue(@Valid @RequestBody IssueRequest issueRequest, @PathVariable String id) {
 
-        try {
 
-            EntityModel<Issue> modifiedIssue = issueService.modifyIssue(issue, id);
-            IssueResponse issueResponse = new IssueResponse(
-                    false,
-                    "Successful",
-                    "Modified Successfully",
-                    modifiedIssue,
-                    null
-            );
-
-            return ResponseEntity.ok(issueResponse);
-
-        } catch (IssueNotFoundException issueNotFoundException) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-        }
 
     }
 
