@@ -1,6 +1,5 @@
 package com.frankefelipee.myissuertracker.issue;
 
-import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 
@@ -9,10 +8,7 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@AllArgsConstructor
 public class IssueLinkBuilder {
-
-    private final IssueRepository issueRepository;
 
     public CollectionModel<EntityModel<Issue>> getIssuesListWithLinks(List<Issue> issueList) {
 
