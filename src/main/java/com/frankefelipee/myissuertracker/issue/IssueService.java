@@ -35,29 +35,24 @@ public class IssueService {
 
     }
 
-    public EntityModel<Issue> modifyIssue(Issue issue, String id) {
+    public EntityModel<Issue> modifyIssue(Issue payloadIssue, String id) {
 
-        Issue issueModified = (Issue) issueRepository.findById(id)
-                .map(issue1 -> {
-                    issue1.setSalesForce(issue.getSalesForce());
-                    issue1.setDescription(issue.getDescription());
-                    issue1.setTicket(issue.getTicket());
-                    issue1.setDone(issue.isDone());
-                    return null;
-                })
-                .orElseGet(() -> issueRepository.save(issue));
+        Issue currentIssue = issueRepository.findById(id).orElseThrow(() -> new IssueNotFoundException(id));
 
         if (
-                issue.getDescription().equals(issueModified.getDescription()) &&
-                issue.getTicket().equals(issueModified.getTicket()) &&
-                issue.getSalesForce().equals(issueModified.getSalesForce())
+                payloadIssue.getDescription().equals(currentIssue.getDescription()) &&
+                        payloadIssue.getTicket().equals(currentIssue.getTicket()) &&
+                        payloadIssue.getSalesForce().equals(currentIssue.getSalesForce())
         ) {
 
             throw new IssueContainsSameDataException();
 
         }
 
-        return linkBuilder.getModifiedIssueWithLinks(issueModified);
+        currentIssue.setDescription(payloadIssue.getDescription());
+        currentIssue.setTicket(payloadIssue.getTicket());
+        currentIssue.setSalesForce(payloadIssue.getSalesForce());
+        return linkBuilder.getModifiedIssueWithLinks(issueRepository.save(currentIssue));
 
     }
 
