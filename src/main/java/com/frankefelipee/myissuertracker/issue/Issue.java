@@ -19,6 +19,12 @@ import lombok.Setter;
 @Table(name = "issues")
 public class Issue {
 
+    public static IssueRequest mapIssueToRequest(Issue issue) {
+
+        return new IssueRequest(issue.getSalesForce(), issue.getTicket(), issue.getDescription());
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
