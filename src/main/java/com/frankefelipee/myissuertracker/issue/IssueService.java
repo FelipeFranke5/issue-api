@@ -78,4 +78,10 @@ public class IssueService {
 
     }
 
+    public CollectionModel<EntityModel<Issue>> filterPendingIssues() {
+
+        List<Issue> finishedIssues = issueRepository.findByDone(false);
+        return linkBuilder.getIssuesListWithLinks(finishedIssues);
+    }
+
 }
