@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -127,6 +128,20 @@ public class GlobalExceptionHandler {
                         ZonedDateTime.now()
                 ),
                 HttpStatus.NOT_FOUND
+        );
+
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "Request Method Not Supported",
+                        "This resource requires another HTTP method.",
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.METHOD_NOT_ALLOWED
         );
 
     }
