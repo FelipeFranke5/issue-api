@@ -82,6 +82,7 @@ public class IssueService {
 
         List<Issue> finishedIssues = issueRepository.findByDone(false);
         return linkBuilder.getIssuesListWithLinks(finishedIssues);
+
     }
 
 }
