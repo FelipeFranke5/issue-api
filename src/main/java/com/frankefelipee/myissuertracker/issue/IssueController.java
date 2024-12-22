@@ -34,6 +34,14 @@ public class IssueController {
 
     }
 
+    @GetMapping("/search/pending")
+    public ResponseEntity<CollectionModel<EntityModel<Issue>>> pendingIssues() {
+
+        CollectionModel<EntityModel<Issue>> pendingIssues = issueService.filterPendingIssues();
+        return ResponseEntity.ok(pendingIssues);
+
+    }
+
     @PostMapping("/create")
     ResponseEntity<EntityModel<Issue>> createIssue(@Valid @RequestBody IssueRequest issueRequest) {
 
