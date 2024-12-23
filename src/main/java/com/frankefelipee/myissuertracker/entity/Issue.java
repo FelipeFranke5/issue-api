@@ -1,20 +1,19 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.frankefelipee.myissuertracker.request.IssueRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
 @Entity
 @Table(name = "issues")
 public class Issue {
