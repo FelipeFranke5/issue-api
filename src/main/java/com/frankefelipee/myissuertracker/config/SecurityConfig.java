@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker.auth;
+package com.frankefelipee.myissuertracker.config;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
