@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 new GlobalErrorResponse(
-                        "Payload is required",
+                        "Required Request Body",
                         "Please provide a request body in order to proceed.",
                         ZonedDateTime.now()
                 ),
