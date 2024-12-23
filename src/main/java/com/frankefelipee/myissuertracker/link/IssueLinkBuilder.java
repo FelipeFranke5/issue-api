@@ -1,5 +1,7 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.link;
 
+import com.frankefelipee.myissuertracker.controller.IssueController;
+import com.frankefelipee.myissuertracker.entity.Issue;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
