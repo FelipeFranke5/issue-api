@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker.auth;
+package com.frankefelipee.myissuertracker.config;
 
 import lombok.Getter;
 
