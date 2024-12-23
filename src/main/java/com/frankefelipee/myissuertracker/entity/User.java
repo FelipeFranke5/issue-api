@@ -1,17 +1,11 @@
-package com.frankefelipee.myissuertracker.user;
+package com.frankefelipee.myissuertracker.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.frankefelipee.myissuertracker.auth.AuthRequest;
+import com.frankefelipee.myissuertracker.request.AuthRequest;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
