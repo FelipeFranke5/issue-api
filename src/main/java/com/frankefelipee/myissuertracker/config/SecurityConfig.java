@@ -33,7 +33,6 @@ public class SecurityConfig {
     public SecurityConfig() {
 
         Key key = Key.setKey();
-        assert key != null;
         this.rsaPublicKey = key.getRsaPublicKey();
         this.rsaPrivateKey = key.getRsaPrivateKey();
 
