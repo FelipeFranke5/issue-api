@@ -1,5 +1,6 @@
-package com.frankefelipee.myissuertracker.user;
+package com.frankefelipee.myissuertracker.repository;
 
+import com.frankefelipee.myissuertracker.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
