@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker;
+package com.frankefelipee.myissuertracker.exception;
 
 import java.time.ZonedDateTime;
 
