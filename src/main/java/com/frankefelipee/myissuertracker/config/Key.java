@@ -1,5 +1,6 @@
 package com.frankefelipee.myissuertracker.config;
 
+import com.frankefelipee.myissuertracker.exception.CreateKeyException;
 import lombok.Getter;
 
 import java.security.KeyPair;
@@ -39,7 +40,7 @@ public class Key {
 
         } catch (NoSuchAlgorithmException e) {
 
-            return null;
+            throw new CreateKeyException(e);
 
         }
 
