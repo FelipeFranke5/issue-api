@@ -1,5 +1,11 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.service;
 
+import com.frankefelipee.myissuertracker.exception.IssueAlreadyDoneException;
+import com.frankefelipee.myissuertracker.exception.IssueContainsSameDataException;
+import com.frankefelipee.myissuertracker.exception.IssueNotFoundException;
+import com.frankefelipee.myissuertracker.entity.Issue;
+import com.frankefelipee.myissuertracker.link.IssueLinkBuilder;
+import com.frankefelipee.myissuertracker.repository.IssueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -78,9 +84,22 @@ public class IssueService {
 
     }
 
+    public void deleteAllIssues() {
+
+        issueRepository.deleteAll();
+
+    }
+
     public CollectionModel<EntityModel<Issue>> filterPendingIssues() {
 
         List<Issue> finishedIssues = issueRepository.findByDone(false);
+        return linkBuilder.getIssuesListWithLinks(finishedIssues);
+
+    }
+
+    public CollectionModel<EntityModel<Issue>> filterFinishedIssues() {
+
+        List<Issue> finishedIssues = issueRepository.findByDone(true);
         return linkBuilder.getIssuesListWithLinks(finishedIssues);
 
     }
