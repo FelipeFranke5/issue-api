@@ -157,4 +157,18 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(CreateKeyException.class)
+    public ResponseEntity<?> handleCreateKeyException(CreateKeyException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "Create Key Error",
+                        e.getMessage(),
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+
+    }
+
 }
