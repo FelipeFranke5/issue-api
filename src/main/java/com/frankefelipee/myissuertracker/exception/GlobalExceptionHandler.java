@@ -129,6 +129,20 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException e) {
+
+        return new ResponseEntity<>(
+                new GlobalErrorResponse(
+                        "User Not Found",
+                        e.getMessage(),
+                        ZonedDateTime.now()
+                ),
+                HttpStatus.NOT_FOUND
+        );
+
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 
