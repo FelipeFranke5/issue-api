@@ -1,6 +1,4 @@
-package com.frankefelipee.myissuertracker;
-
-import org.springframework.validation.FieldError;
+package com.frankefelipee.myissuertracker.exception;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
