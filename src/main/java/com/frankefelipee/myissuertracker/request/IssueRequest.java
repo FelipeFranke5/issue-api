@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
