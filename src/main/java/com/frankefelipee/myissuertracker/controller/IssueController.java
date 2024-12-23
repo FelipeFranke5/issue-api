@@ -1,5 +1,8 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.controller;
 
+import com.frankefelipee.myissuertracker.entity.Issue;
+import com.frankefelipee.myissuertracker.request.IssueRequest;
+import com.frankefelipee.myissuertracker.service.IssueService;
 import jakarta.validation.Valid;
 
 import lombok.AllArgsConstructor;
@@ -42,8 +45,16 @@ public class IssueController {
 
     }
 
+    @GetMapping("/search/finished")
+    public ResponseEntity<CollectionModel<EntityModel<Issue>>> finishedIssues() {
+
+        CollectionModel<EntityModel<Issue>> pendingIssues = issueService.filterFinishedIssues();
+        return ResponseEntity.ok(pendingIssues);
+
+    }
+
     @PostMapping("/create")
-    ResponseEntity<EntityModel<Issue>> createIssue(@Valid @RequestBody IssueRequest issueRequest) {
+    public ResponseEntity<EntityModel<Issue>> createIssue(@Valid @RequestBody IssueRequest issueRequest) {
 
         Issue issue = new Issue();
         issue.setSalesForce(issueRequest.salesForce());
@@ -55,14 +66,14 @@ public class IssueController {
     }
 
     @PatchMapping("/mark_done/{id}")
-    ResponseEntity<EntityModel<Issue>> finishIssue(@PathVariable String id) {
+    public ResponseEntity<EntityModel<Issue>> finishIssue(@PathVariable String id) {
 
         return ResponseEntity.ok(issueService.markIssueAsDone(id));
 
     }
 
     @PutMapping("/modify/{id}")
-    ResponseEntity<EntityModel<Issue>> changeIssue(@Valid @RequestBody IssueRequest issueRequest, @PathVariable String id) {
+    public ResponseEntity<EntityModel<Issue>> changeIssue(@Valid @RequestBody IssueRequest issueRequest, @PathVariable String id) {
 
         Issue issue = new Issue();
         issue.setSalesForce(issueRequest.salesForce());
@@ -74,9 +85,17 @@ public class IssueController {
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<?> deleteIssue(@PathVariable String id) {
+    public ResponseEntity<?> deleteIssue(@PathVariable String id) {
 
         issueService.deleteIssueById(id);
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<?> deleteAllIssues() {
+
+        issueService.deleteAllIssues();
         return ResponseEntity.noContent().build();
 
     }
