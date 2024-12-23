@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker.issue;
+package com.frankefelipee.myissuertracker.exception;
 
 public class IssueContainsSameDataException extends RuntimeException {
 
