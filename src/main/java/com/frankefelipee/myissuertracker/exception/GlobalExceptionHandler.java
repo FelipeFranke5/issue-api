@@ -1,8 +1,5 @@
-package com.frankefelipee.myissuertracker;
+package com.frankefelipee.myissuertracker.exception;
 
-import com.frankefelipee.myissuertracker.issue.IssueAlreadyDoneException;
-import com.frankefelipee.myissuertracker.issue.IssueContainsSameDataException;
-import com.frankefelipee.myissuertracker.issue.IssueNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.ResponseEntity;
