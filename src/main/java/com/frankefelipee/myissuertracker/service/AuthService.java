@@ -1,8 +1,9 @@
-package com.frankefelipee.myissuertracker.auth;
+package com.frankefelipee.myissuertracker.service;
 
 import java.time.Instant;
 import java.util.Optional;
 
+import com.frankefelipee.myissuertracker.request.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -10,8 +11,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
-import com.frankefelipee.myissuertracker.user.User;
-import com.frankefelipee.myissuertracker.user.UserRepository;
+import com.frankefelipee.myissuertracker.entity.User;
+import com.frankefelipee.myissuertracker.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -55,8 +56,7 @@ public class AuthService {
                 .issuedAt(now)
                 .build();
 
-        String jwtValue = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return jwtValue;
+        return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
     }
 
