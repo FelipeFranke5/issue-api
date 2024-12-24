@@ -1,5 +1,8 @@
-package com.frankefelipee.myissuertracker.auth;
+package com.frankefelipee.myissuertracker.controller;
 
+import com.frankefelipee.myissuertracker.request.AuthRequest;
+import com.frankefelipee.myissuertracker.response.AuthResponse;
+import com.frankefelipee.myissuertracker.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
