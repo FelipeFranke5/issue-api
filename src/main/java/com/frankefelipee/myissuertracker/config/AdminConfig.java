@@ -1,4 +1,4 @@
-package com.frankefelipee.myissuertracker.auth;
+package com.frankefelipee.myissuertracker.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.frankefelipee.myissuertracker.user.User;
-import com.frankefelipee.myissuertracker.user.UserRepository;
+import com.frankefelipee.myissuertracker.entity.User;
+import com.frankefelipee.myissuertracker.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
